@@ -1,12 +1,15 @@
-import Test from './components/testComponent';
+import { Provider } from 'react-redux';
+import Test from './components/Test';
 import Main from './components/MainPage/MainPage';
+import store from './slices/index.js';
 
 const App = () => (
-  <div className="App">
-    <h1>Hello World!</h1>
-    <Test />
-    <Main />
-  </div>
+  <Provider store={store}>
+    <div className="App">
+      <Test />
+      <Main />
+    </div>
+  </Provider>
 );
 
 export default App;
