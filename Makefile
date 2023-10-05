@@ -1,14 +1,14 @@
-start: 
-	npm start
-
-lint:
-	npx eslint .
-
-lintFix: 
-	npm run lint
+lint-frontend:
+	make -C frontend lint
 
 install:
 	npm ci
 
-build: 
-	npm run build
+start-frontend:
+	make -C frontend start
+
+start-backend:
+	node server.js
+
+start:
+	make start-backend & make start-frontend
