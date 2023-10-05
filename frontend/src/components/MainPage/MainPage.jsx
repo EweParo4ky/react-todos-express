@@ -14,6 +14,7 @@ const Main = () => {
           <h4 className="text-center my-3 pb-3">To Do APP</h4>
           <Input />
           <Tasks />
+          <div id="loader" />
         </div>
       </Container>
     </div>

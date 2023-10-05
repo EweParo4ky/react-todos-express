@@ -39,7 +39,6 @@ const Input = () => {
           className="border p-0 ps-2 me-2"
           type="text"
           required
-          id="name"
           value={name}
           autoComplete="off"
           placeholder="Task name..."
@@ -54,7 +53,7 @@ const Input = () => {
           autoComplete="off"
           placeholder="Description..."
         />
-        <button className="btn btn-warning btn-group-vertical rounded-2 ms-2" type="submit">Save Task</button>
+        <button className="btn btn-warning btn-group-vertical rounded-2 ms-2" type="submit"><i className="fas fa-bookmark"> Save Task</i></button>
       </Form.Group>
     </Form>
   );

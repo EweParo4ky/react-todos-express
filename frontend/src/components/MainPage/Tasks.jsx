@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  MDBTable, MDBTableBody, MDBTableHead, MDBBtn,
-} from 'mdb-react-ui-kit';
+// import {
+//  MDBTableBody, MDBTableHead,
+// } from 'mdb-react-ui-kit';
 import _ from 'lodash';
 
 const Tasks = () => {
@@ -10,37 +10,49 @@ const Tasks = () => {
   const getNumber = (array, item) => _.findIndex(array, item) + 1;
 
   return (
-    <div>
-      <MDBTable className="mb-4">
-        <MDBTableHead>
+    <div className="table-responsive">
+      <table className="mb-4 table-sm table-hover w-100">
+        <thead className="table-warning">
           <tr>
             <th scope="col">No.</th>
             <th scope="col">Todo item</th>
             <th scope="col">Description</th>
             <th scope="col">Status</th>
-            <th scope="col">Actions</th>
+            <th className="text-end" scope="col">
+              Actions
+            </th>
           </tr>
-        </MDBTableHead>
-        <MDBTableBody>
+        </thead>
+        <tbody>
           {tasks.map((task) => (
-            <tr key={task.id}>
+            <tr className="align-top" key={task.id}>
               <th scope="row">{getNumber(tasks, task)}</th>
               <td>{task.name}</td>
-              <td>{task.description}</td>
+              <td className="description">{task.description}</td>
               <td>{task.status}</td>
-              <td>
-                <MDBBtn type="submit" color="danger">
-                  Delete
-                </MDBBtn>
+              <td className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  className="ms-1 btn btn-danger btn-sm mb-1"
+                >
+                  <span className="icon">
+                    <i className="fas fa-trash" />
+                  </span>
+                </button>
 
-                <MDBBtn type="submit" color="success" className="ms-1">
-                  Finished
-                </MDBBtn>
+                <button
+                  type="submit"
+                  className="ms-1 btn btn-success btn-sm mb-1"
+                >
+                  <span className="icon">
+                    <i className="fas fa-check" />
+                  </span>
+                </button>
               </td>
             </tr>
           ))}
-        </MDBTableBody>
-      </MDBTable>
+        </tbody>
+      </table>
     </div>
   );
 };
