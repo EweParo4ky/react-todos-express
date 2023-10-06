@@ -4,3 +4,7 @@
   overflow-wrap: break-word;
 	max-width: 200px;
 }
+
+.done {
+  text-decoration: line-through
+}

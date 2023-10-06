@@ -1,17 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-// import {
-//  MDBTableBody, MDBTableHead,
-// } from 'mdb-react-ui-kit';
+import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
+import { actions as tasksActions } from '../../slices/tasksSlice';
 
 const Tasks = () => {
-  const tasks = useSelector((state) => state.tasks);
+  const tasks = useSelector((state) => state.tasks.tasks);
   const getNumber = (array, item) => _.findIndex(array, item) + 1;
+  const dispatch = useDispatch();
 
   return (
     <div className="table-responsive">
-      <table className="mb-4 table-sm table-hover w-100">
+      <table className="mb-4 tale table-sm table-hover w-100">
         <thead className="table-warning">
           <tr>
             <th scope="col">No.</th>
@@ -27,12 +26,18 @@ const Tasks = () => {
           {tasks.map((task) => (
             <tr className="align-top" key={task.id}>
               <th scope="row">{getNumber(tasks, task)}</th>
-              <td>{task.name}</td>
-              <td className="description">{task.description}</td>
-              <td>{task.status}</td>
+              <td className={task.done ? 'done' : null}>{task.title}</td>
+              <td className={`description ${task.done ? 'done' : null}`}>{task.body}</td>
+              <td
+                className={`${task.done ? 'text-success text-bold' : 'text-warning'}`}
+                style={{ fontWeight: 'bold' }}
+              >
+                {`${task.done ? 'Finished' : 'In progress'}`}
+              </td>
               <td className="d-flex justify-content-end">
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={() => dispatch(tasksActions.deleteTask(task.id))}
                   className="ms-1 btn btn-danger btn-sm mb-1"
                 >
                   <span className="icon">
@@ -41,8 +46,9 @@ const Tasks = () => {
                 </button>
 
                 <button
-                  type="submit"
-                  className="ms-1 btn btn-success btn-sm mb-1"
+                  type="button"
+                  onClick={() => dispatch(tasksActions.finishTask(task))}
+                  className={`ms-1 btn btn-success btn-sm mb-1 ${task.done ? 'active' : null}`}
                 >
                   <span className="icon">
                     <i className="fas fa-check" />
