@@ -58,7 +58,7 @@ const Input = () => {
           autoComplete="off"
           placeholder="Description..."
         />
-        <button className="btn btn-warning btn-group-vertical rounded-2 ms-2" type="submit"><i className="fas fa-bookmark"> Save Task</i></button>
+        <button className="btn btn-warning btn-group-vertical rounded-2 ms-2 text-dark" type="submit"><i className="fas fa-bookmark"> Save Task</i></button>
       </Form.Group>
     </Form>
   );

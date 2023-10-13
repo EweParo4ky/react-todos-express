@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { actions as tasksActions } from '../../slices/tasksSlice';
+import { toggleModal } from '../../slices/modalSlice';
 
 const Tasks = () => {
   const tasks = useSelector((state) => state.tasks.tasks);
@@ -27,9 +28,13 @@ const Tasks = () => {
             <tr className="align-top" key={task.id}>
               <th scope="row">{getNumber(tasks, task)}</th>
               <td className={task.done ? 'done' : null}>{task.title}</td>
-              <td className={`description ${task.done ? 'done' : null}`}>{task.body}</td>
+              <td className={`description ${task.done ? 'done' : null}`}>
+                {task.body}
+              </td>
               <td
-                className={`${task.done ? 'text-success text-bold' : 'text-warning'}`}
+                className={`${
+                  task.done ? 'text-success text-bold' : 'text-warning'
+                }`}
                 style={{ fontWeight: 'bold' }}
               >
                 {`${task.done ? 'Finished' : 'In progress'}`}
@@ -37,10 +42,19 @@ const Tasks = () => {
               <td className="d-flex justify-content-end">
                 <button
                   type="button"
+                  onClick={() => dispatch(toggleModal(task))}
+                  className="ms-1 btn btn-warning btn-sm mb-1"
+                >
+                  <span className="icon text-light">
+                    <i className="fa-regular fa-pen-to-square fa-lg" />
+                  </span>
+                </button>
+                <button
+                  type="button"
                   onClick={() => dispatch(tasksActions.deleteTask(task.id))}
                   className="ms-1 btn btn-danger btn-sm mb-1"
                 >
-                  <span className="icon">
+                  <span className="icon text-light">
                     <i className="fas fa-trash" />
                   </span>
                 </button>
@@ -48,9 +62,11 @@ const Tasks = () => {
                 <button
                   type="button"
                   onClick={() => dispatch(tasksActions.finishTask(task))}
-                  className={`ms-1 btn btn-success btn-sm mb-1 ${task.done ? 'active' : null}`}
+                  className={`ms-1 btn btn-success btn-sm mb-1 ${
+                    task.done ? 'active' : null
+                  }`}
                 >
-                  <span className="icon">
+                  <span className="icon text-light">
                     <i className="fas fa-check" />
                   </span>
                 </button>
