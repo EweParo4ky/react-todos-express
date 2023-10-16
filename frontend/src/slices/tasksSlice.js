@@ -30,10 +30,10 @@ const tasksSlice = createSlice({
       state.tasks[currentIndex].done = !state.tasks[currentIndex].done;
     },
     editTask: (state, { payload }) => {
-      const { task, newBody } = payload;
+      const { currentTask, body } = payload;
       console.log('PAYLOAD', payload);
-      const currentIndex = _.findIndex(state.tasks, task);
-      state.tasks[currentIndex].body = newBody;
+      const currentIndex = _.findIndex(state.tasks, currentTask);
+      state.tasks[currentIndex].body = body;
     },
   },
 });

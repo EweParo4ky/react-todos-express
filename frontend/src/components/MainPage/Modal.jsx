@@ -25,7 +25,8 @@ const EditModalWindow = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(tasksActions({ currentTask, body }));
+    dispatch(tasksActions.editTask({ currentTask, body }));
+    dispatch(toggleModal(currentTask));
   };
 
   console.log('INPUT REF', inputRef);
@@ -60,7 +61,7 @@ const EditModalWindow = () => {
               </Button>
               <Button
                 type="submit"
-                // onClick={(e) => handleSubmit(e)}
+                onClick={(e) => handleSubmit(e)}
                 variant="success"
                 className="fw-bold"
               >
