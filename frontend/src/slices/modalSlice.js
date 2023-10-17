@@ -3,7 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isOpened: false,
-  currentTask: 'initial value',
+  currentTask: {
+    title: '',
+    id: null,
+    body: '',
+    done: false,
+  },
 };
 
 const modalSlice = createSlice({

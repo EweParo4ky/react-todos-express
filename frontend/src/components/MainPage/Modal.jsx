@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -10,14 +10,19 @@ const EditModalWindow = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const currentTask = useSelector((state) => state.modal.currentTask);
-  const [body, setBody] = useState(currentTask.body);
-  console.log('BODY', body);
-  console.log('CurrentTask in Modal Slice', currentTask.body);
-  const isOpened = useSelector((state) => state.modal.isOpened);
+  const [body, setBody] = useState(' ');
 
-  // useEffect(() => {
-  //   inputRef.current.focus();
-  // });
+  useEffect(() => {
+    inputRef.current.focus();
+  });
+  useEffect(() => {
+    inputRef.current.select();
+  });
+
+  useEffect(() => {
+    setBody(currentTask.body);
+  }, [currentTask.body]);
+
   const handleClose = () => {
     dispatch(toggleModal(currentTask));
     setBody(currentTask.body);
@@ -30,10 +35,9 @@ const EditModalWindow = () => {
   };
 
   console.log('INPUT REF', inputRef);
-  console.log('isOpened', isOpened);
 
   return (
-    <Modal show={isOpened} onHide={() => handleClose()}>
+    <Modal show onHide={() => handleClose()}>
       <Modal.Header closeButton>
         <Modal.Title>Edit description</Modal.Title>
       </Modal.Header>
@@ -45,7 +49,7 @@ const EditModalWindow = () => {
             <Form.Text className="text-muted">Edit your Task</Form.Text>
             <Form.Control
               onChange={(e) => setBody(e.target.value)}
-              className="mb-2"
+              className="mb-2 mt-2"
               type="text"
               value={body}
               ref={inputRef}
