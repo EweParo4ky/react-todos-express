@@ -41,6 +41,7 @@ const Tasks = () => {
               </td>
               <td className="d-flex justify-content-end">
                 <button
+                  disabled={task.done}
                   type="button"
                   onClick={() => dispatch(toggleModal(task))}
                   className="ms-1 btn btn-warning btn-sm mb-1"

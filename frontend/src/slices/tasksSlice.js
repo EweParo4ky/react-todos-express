@@ -4,20 +4,17 @@ import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
 const initialState = {
-  tasks: [
-    {
-      title: 'Test task',
-      id: 1,
-      body: 'test task for initial state',
-      done: false,
-    },
-  ],
+  tasks: [],
 };
 
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
+    setTasks: (state, { payload }) => {
+      console.log('payload in setTasks', payload);
+      state.tasks = payload;
+    },
     addTask: (state, { payload }) => {
       state.tasks.unshift(payload);
     },

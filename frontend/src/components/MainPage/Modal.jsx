@@ -15,9 +15,6 @@ const EditModalWindow = () => {
   useEffect(() => {
     inputRef.current.focus();
   });
-  useEffect(() => {
-    inputRef.current.select();
-  });
 
   useEffect(() => {
     setBody(currentTask.body);
