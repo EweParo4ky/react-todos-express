@@ -1,16 +1,40 @@
 const express = require('express');
 const app = express();
+const { v4 } = require('uuid');
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server has been started on port: ${port}...`));
+app.listen(port, () =>
+  console.log(`Server has been started on port: ${port}...`)
+);
 
-const savedTasks = [{
-  title: 'Test task',
-  id: 1,
-  body: 'test task for initial state',
-  done: false,
-}];
+let TASKS = [
+  {
+    title: 'Test task',
+    id: v4(),
+    body: 'Task for example',
+    done: false,
+  },
+];
 
-app.get('/api/server', (req, res) => {
-    res.send(savedTasks);
-  });
+app.use(express.json()); // для работы с reqстами
+
+app.get('/api/tasks', (req, res) => {
+  res.status(200).json(TASKS);
+});
+
+app.post('/api/tasks', (req, res) => {
+  const newTask = { ...req.body, status: 'In progress', id: v4() };
+  TASKS.unshift(newTask);
+  res.status(201).json(newTask);
+});
+
+app.delete('/api/tasks/:id', (req, res) => {
+  TASKS = TASKS.filter((t) => t.id !== req.params.id);
+  res.status(200).json({message: 'Task was succsesfuly deleted'});
+});
+
+app.put('/api/tasks/:id', (req, res) => {
+  const idx = TASKS.findIndex((t) => t.id === req.params.id);
+  TASKS[idx] = req.body;
+  res.status(200).json(CONTACTS[idx]);
+});

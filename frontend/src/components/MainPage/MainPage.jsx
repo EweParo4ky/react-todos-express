@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import Input from './Input';
 import Tasks from './Tasks';
-import Modal from './Modal';
+import Modal from '../Modal';
 
 const Main = () => {
   const isOpened = useSelector((state) => state.modal.isOpened);

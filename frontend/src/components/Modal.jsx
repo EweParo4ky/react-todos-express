@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { actions as tasksActions } from '../../slices/tasksSlice';
-import { toggleModal } from '../../slices/modalSlice';
+import { actions as tasksActions } from '../slices/tasksSlice';
+import { toggleModal } from '../slices/modalSlice';
 
 const EditModalWindow = () => {
   const dispatch = useDispatch();

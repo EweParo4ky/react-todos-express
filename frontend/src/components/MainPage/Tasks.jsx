@@ -3,14 +3,33 @@ import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { actions as tasksActions } from '../../slices/tasksSlice';
 import { toggleModal } from '../../slices/modalSlice';
+import { request } from './Input';
 
 const Tasks = () => {
   const tasks = useSelector((state) => state.tasks.tasks);
   const getNumber = (array, item) => _.findIndex(array, item) + 1;
   const dispatch = useDispatch();
+  const requestUrl = '/api/tasks';
+
+  const handleDelete = async (id) => {
+    await request(`${requestUrl}/${id}`, 'DELETE')
+      .then(() => dispatch(tasksActions.deleteTask(id)));
+  };
+
+  // const handleFinish= async (id) => {
+  //   const resp = await request(`${requestUrl}/${id}`, 'PUT');
+  //   dispatch(tasksActions.finishTask())
+  // };
 
   return (
     <div className="table-responsive">
+      {tasks.length === 0 && (
+        <div className="d-flex justify-content-center">
+          <h6 className="mb-2 text-warning">
+            There are no tasks here. Please, add your first one
+          </h6>
+        </div>
+      )}
       <table className="mb-4 tale table-sm table-hover w-100">
         <thead className="table-warning">
           <tr>
@@ -52,7 +71,7 @@ const Tasks = () => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => dispatch(tasksActions.deleteTask(task.id))}
+                  onClick={() => handleDelete(task.id)}
                   className="ms-1 btn btn-danger btn-sm mb-1"
                 >
                   <span className="icon text-light">

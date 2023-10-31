@@ -1,9 +1,31 @@
+/* eslint-disable consistent-return */
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 import { Form } from 'react-bootstrap';
 import { actions as tasksActions } from '../../slices/tasksSlice';
+import Loader from '../Loader';
+
+export const request = async (url, method = 'GET', data = null) => {
+  try {
+    const headers = {};
+    let body;
+    if (data) {
+      headers['Content-Type'] = 'application/json';
+      body = JSON.stringify(data);
+    }
+    const resp = await axios({
+      url,
+      method,
+      headers,
+      data: body,
+    });
+    console.log('DATA', resp.data);
+    return resp.data;
+  } catch (error) {
+    console.warn('Error: ', error.massege);
+  }
+};
 
 const Input = () => {
   const [title, setTitle] = useState('');
@@ -12,7 +34,7 @@ const Input = () => {
   const tasks = useSelector((state) => state.tasks);
   console.log('TASKS', tasks);
   const dispatch = useDispatch();
-  const requestUrl = '/api/server';
+  const requestUrl = '/api/tasks';
   const inputRef = useRef();
 
   useEffect(() => {
@@ -35,15 +57,14 @@ const Input = () => {
     inputRef.current.focus();
   }, [tasks]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newTask = {
       title,
       body,
-      id: uuidv4(),
-      status: 'In progress',
     };
-    dispatch(tasksActions.addTask(newTask));
+    const response = await request(requestUrl, 'POST', newTask);
+    dispatch(tasksActions.addTask(response));
     setTitle('');
     setBody('');
   };
@@ -79,16 +100,7 @@ const Input = () => {
           <i className="fas fa-bookmark"> Save Task</i>
         </button>
       </Form.Group>
-      {reqStatus !== 'loading' && (
-        <div className="mt-2 d-flex justify-content-center">
-          <div
-            className="spinner-border text-warning"
-            role="status"
-          >
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div>
-      )}
+      {reqStatus === 'loading' && <Loader />}
     </Form>
   );
 };
