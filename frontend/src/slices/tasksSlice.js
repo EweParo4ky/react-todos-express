@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
 
 const initialState = {
   tasks: [],
@@ -12,7 +11,6 @@ const tasksSlice = createSlice({
   initialState,
   reducers: {
     setTasks: (state, { payload }) => {
-      console.log('payload in setTasks', payload);
       state.tasks = payload;
     },
     addTask: (state, { payload }) => {
@@ -22,15 +20,9 @@ const tasksSlice = createSlice({
       const taskId = payload;
       state.tasks = state.tasks.filter((task) => task.id !== taskId);
     },
-    finishTask: (state, { payload }) => {
-      const currentIndex = _.findIndex(state.tasks, payload);
-      state.tasks[currentIndex].done = !state.tasks[currentIndex].done;
-    },
     editTask: (state, { payload }) => {
-      const { currentTask, body } = payload;
-      console.log('PAYLOAD', payload);
-      const currentIndex = _.findIndex(state.tasks, currentTask);
-      state.tasks[currentIndex].body = body;
+      const currentIndex = state.tasks.findIndex((t) => t.id === payload.id);
+      state.tasks[currentIndex] = payload;
     },
   },
 });

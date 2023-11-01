@@ -16,10 +16,12 @@ const Tasks = () => {
       .then(() => dispatch(tasksActions.deleteTask(id)));
   };
 
-  // const handleFinish= async (id) => {
-  //   const resp = await request(`${requestUrl}/${id}`, 'PUT');
-  //   dispatch(tasksActions.finishTask())
-  // };
+  const handleFinish = async (task) => {
+    const newStatus = !task.done;
+    const updatedTask = { ...task, done: newStatus };
+    await request(`${requestUrl}/${task.id}`, 'PUT', updatedTask)
+      .then((updTask) => dispatch(tasksActions.editTask(updTask)));
+  };
 
   return (
     <div className="table-responsive">
@@ -81,7 +83,7 @@ const Tasks = () => {
 
                 <button
                   type="button"
-                  onClick={() => dispatch(tasksActions.finishTask(task))}
+                  onClick={() => handleFinish(task)}
                   className={`ms-1 btn btn-success btn-sm mb-1 ${
                     task.done ? 'active' : null
                   }`}

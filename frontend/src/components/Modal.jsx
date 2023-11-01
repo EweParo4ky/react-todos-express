@@ -5,12 +5,14 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { actions as tasksActions } from '../slices/tasksSlice';
 import { toggleModal } from '../slices/modalSlice';
+import { request } from './MainPage/Input';
 
 const EditModalWindow = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const currentTask = useSelector((state) => state.modal.currentTask);
   const [body, setBody] = useState(' ');
+  const requestUrl = '/api/tasks';
 
   useEffect(() => {
     inputRef.current.focus();
@@ -25,10 +27,12 @@ const EditModalWindow = () => {
     setBody(currentTask.body);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(tasksActions.editTask({ currentTask, body }));
-    dispatch(toggleModal(currentTask));
+    const updatedTask = { ...currentTask, body };
+    await request(`${requestUrl}/${updatedTask.id}`, 'PUT', updatedTask)
+      .then((updTask) => dispatch(tasksActions.editTask(updTask)))
+      .then(() => dispatch(toggleModal(currentTask)));
   };
 
   console.log('INPUT REF', inputRef);

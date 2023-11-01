@@ -9,7 +9,7 @@ app.listen(port, () =>
 
 let TASKS = [
   {
-    title: 'Test task',
+    title: 'Hello task',
     id: v4(),
     body: 'Task for example',
     done: false,
@@ -36,5 +36,5 @@ app.delete('/api/tasks/:id', (req, res) => {
 app.put('/api/tasks/:id', (req, res) => {
   const idx = TASKS.findIndex((t) => t.id === req.params.id);
   TASKS[idx] = req.body;
-  res.status(200).json(CONTACTS[idx]);
+  res.status(200).json(TASKS[idx]);
 });

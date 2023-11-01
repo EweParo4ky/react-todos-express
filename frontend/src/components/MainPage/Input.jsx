@@ -20,7 +20,6 @@ export const request = async (url, method = 'GET', data = null) => {
       headers,
       data: body,
     });
-    console.log('DATA', resp.data);
     return resp.data;
   } catch (error) {
     console.warn('Error: ', error.massege);
@@ -32,7 +31,6 @@ const Input = () => {
   const [body, setBody] = useState('');
   const [reqStatus, setReqStatus] = useState('waiting');
   const tasks = useSelector((state) => state.tasks);
-  console.log('TASKS', tasks);
   const dispatch = useDispatch();
   const requestUrl = '/api/tasks';
   const inputRef = useRef();
