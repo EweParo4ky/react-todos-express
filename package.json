@@ -2,11 +2,11 @@
   "name": "react-todos-express",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
+    "start": "npm server -s ./frontend/build",
     "build": "npm run build --prefix frontend",
-    "start": "make start",
     "postinstall": "cd frontend && npm ci"
   },
   "repository": {
