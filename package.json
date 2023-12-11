@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
-    "start": "npm server -s ./frontend/build",
+    "start": "npm run server -s ./frontend/build",
     "build": "npm run build --prefix frontend",
     "postinstall": "cd frontend && npm ci"
   },
